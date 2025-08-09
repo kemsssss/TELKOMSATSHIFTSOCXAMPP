@@ -1,0 +1,445 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Figtree', Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 220px;
+    background: linear-gradient(180deg, #111 0%, #1a1a1a 100%);
+    color: white;
+    height: 100vh;
+    padding-top: 20px;
+    position: fixed;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+    border-left: 3px solid #8B0000;
+    transform: translateX(5px);
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #DC143C;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Clock Styles */
+#jam {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 14px;
+    color: #8B0000;
+    font-weight: 600;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 8px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+    min-height: 100vh;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: #8B0000;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin: 20px 0 40px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #8B0000, #DC143C);
+    border-radius: 2px;
+}
+
+/* Table Container */
+.table-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    margin-top: 30px;
+}
+
+.table-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #8B0000, #DC143C, #B22222);
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+thead {
+    background: linear-gradient(135deg, #8B0000, #DC143C);
+    color: white;
+}
+
+thead th {
+    padding: 15px 8px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+thead th:last-child {
+    border-right: none;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e1e5e9;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+    background: linear-gradient(90deg, rgba(139, 0, 0, 0.05), rgba(220, 20, 60, 0.05));
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.1);
+}
+
+tbody td {
+    padding: 12px 8px;
+    text-align: center;
+    vertical-align: top;
+    border-right: 1px solid #e1e5e9;
+    max-width: 150px;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+tbody td:last-child {
+    border-right: none;
+}
+
+/* Special styling for multi-line content */
+tbody td:nth-child(8),  /* No Tiket */
+tbody td:nth-child(9),  /* Sangfor */
+tbody td:nth-child(10), /* FortiJTN */
+tbody td:nth-child(11), /* FortiWeb */
+tbody td:nth-child(12), /* Checkpoint */
+tbody td:nth-child(13), /* Sophos IP */
+tbody td:nth-child(14), /* Sophos URL */
+tbody td:nth-child(15), /* VPN */
+tbody td:nth-child(16), /* EDR */
+tbody td:nth-child(17)  /* Daily Report Magnus */ {
+    text-align: left;
+    font-size: 0.85rem;
+    max-width: 200px;
+    white-space: pre-line;
+}
+
+/* Action Buttons */
+.actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+}
+
+.btn-edit:hover {
+    background: linear-gradient(135deg, #218838, #1aa179);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #DC143C, #8B0000);
+    color: white;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #8B0000, #DC143C);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(220, 20, 60, 0.3);
+}
+
+/* Form within table (for delete button) */
+.actions form {
+    margin: 0;
+    display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        margin-left: 220px;
+        padding: 15px;
+    }
+    
+    table {
+        font-size: 0.8rem;
+    }
+    
+    thead th,
+    tbody td {
+        padding: 10px 6px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    
+    .main-content {
+        margin-left: 200px;
+        padding: 10px;
+    }
+    
+    #jam {
+        position: relative;
+        top: auto;
+        right: auto;
+        text-align: center;
+        margin-bottom: 20px;
+        display: block;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin: 10px 0 20px;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+        min-width: 1200px;
+        font-size: 0.75rem;
+    }
+    
+    thead th,
+    tbody td {
+        padding: 8px 4px;
+        min-width: 80px;
+    }
+    
+    .actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+        min-width: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 10px 0;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 10px 5px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+    
+    .table-container {
+        margin: 10px -5px;
+        border-radius: 10px;
+    }
+    
+    table {
+        min-width: 1000px;
+        font-size: 0.7rem;
+    }
+    
+    thead th,
+    tbody td {
+        padding: 6px 3px;
+        min-width: 60px;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #8B0000, #DC143C);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #DC143C, #8B0000);
+}
+
+/* Loading and Transition Effects */
+.table-container {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accessibility */
+.btn:focus,
+table:focus {
+    outline: 3px solid rgba(139, 0, 0, 0.3);
+    outline-offset: 2px;
+}
+
+/* Additional Utilities */
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.font-bold {
+    font-weight: 600;
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    #jam,
+    .actions {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    body {
+        background: white;
+    }
+    
+    .table-container {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    thead {
+        background: #f8f9fa !important;
+        color: black !important;
+    }
+}
