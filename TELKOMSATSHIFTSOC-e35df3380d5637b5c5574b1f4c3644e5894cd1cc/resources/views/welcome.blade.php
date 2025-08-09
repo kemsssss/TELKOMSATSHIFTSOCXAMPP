@@ -134,8 +134,37 @@
         <label>Daily Report Magnus:</label>
         <input type="text" name="magnus[]" placeholder="Masukkan laporan Magnus (Jika Ingin Menambahkan Klik enter)">
       </div>
+
+      
+
     </div>
     </ul>
+
+
+        <div class="section">
+          <h3>PRTG</h3>
+         <div id="prtg1-group" style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+    <div style="flex: 2;">
+        <label>PRTG 1:</label>
+        <input type="text" name="prtg1[]" placeholder="Masukkan laporan PRTG 1 (Jika Ingin Menambahkan Klik enter)">
+    </div>
+    <div style="flex: 1;">
+        <label>Status:</label>
+        <input type="text" name="prtg1_status[]" placeholder="Status">
+    </div>
+</div>
+
+<div id="prtg2-group" style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+    <div style="flex: 2;">
+        <label>PRTG 2:</label>
+        <input type="text" name="prtg2[]" placeholder="Masukkan laporan PRTG 2 (Jika Ingin Menambahkan Klik enter)">
+    </div>
+    <div style="flex: 1;">
+        <label>Status:</label>
+        <input type="text" name="prtg2_status[]" placeholder="Status">
+    </div>
+</div>
+    </div>  
 
     <div class="section">
       <p>Demikian berita acara ini dibuat dengan sebenar-benarnya sebagai bukti telah dilakukan serah terima shift SOC Telkomsat.</p>
