@@ -162,6 +162,10 @@ label::after {
     font-weight: bold;
 }
 
+label.no-star:after {
+    content: "";
+  }
+
 /* Input Styling */
 input[type="text"] {
     width: 100%;

@@ -24,7 +24,7 @@
                 <input type="text" name="nama" value="{{ $petugas->nama }}" required>
 
                 <label for="nik">NIK</label>
-                <input type="text" name="nik" value="{{ $petugas->nik }}" required>
+                <input type="text" name="nik" value="{{ $petugas->nik }}">
 
                 <label for="ttd">Tanda Tangan (TTD)</label>
                 <input type="file" name="ttd">

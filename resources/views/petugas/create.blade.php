@@ -33,8 +33,8 @@
                 <label for="nama">Nama Petugas</label>
                 <input type="text" name="nama" id="nama" placeholder="Contoh: Budi Santoso" value="{{ old('nama') }}" required>
 
-                <label for="nik">NIK</label>
-                <input type="text" name="nik" id="nik" placeholder="Contoh: 1234567890123456" value="{{ old('nik') }}" required>
+                <label for="nik" class="no-star">NIK</label>
+                <input type="text" name="nik" id="nik" placeholder="Jika Tidak ada kosongkan saja" value="{{ old('nik')}}">
 
                 <label for="ttd">Tanda Tangan</label>
                 <input type="file" name="ttd" id="ttd" accept="image/*" onchange="previewTTD(event)" required>

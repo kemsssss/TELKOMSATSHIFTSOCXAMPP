@@ -5,6 +5,7 @@
   <title>Data Berita Acara Shift</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -56,24 +57,26 @@
       background-color: #f1f1f1;
     }
 
-    .btn {
-      padding: 6px 12px;
-      font-size: 13px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+    .btn-icon {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+}
 
-    .btn-edit {
-      background-color: #28a745;
-      color: white;
-      margin-bottom: 4px;
-    }
+.btn-icon:hover {
+  color: #0056b3;
+}
 
-    .btn-print {
-      background-color: #007bff;
-      color: white;
-    }
+.btn-delete {
+  color: #dc3545;
+}
+
+.btn-delete:hover {
+  color: #fff;
+}
 
     @media (max-width: 768px) {
       table {
@@ -155,10 +158,40 @@
               <td>{!! nl2br(str_replace(',', "\n", e($data->edr))) !!}</td>
               <td>{!! nl2br(e($data->daily_report)) !!}</td>
 
-              <td>
-                <a href="{{ route('beritaacara.edit', $data->id) }}" class="btn btn-edit">Edit</a><br>
-                <a href="{{ route('beritaacara.print', $data->id) }}" class="btn btn-print" target="_blank">Print</a>
-              </td>
+              <td style="white-space: nowrap;">
+  <div style="display: flex; gap: 6px; align-items: center;">
+    
+    {{-- Edit --}}
+    <a href="{{ route('beritaacara.edit', $data->id) }}" 
+       class="btn-icon btn-delete" 
+       title="Edit">
+      <i class="fas fa-edit" style="color:#dc3545;"></i>
+    </a>
+
+    {{-- Print --}}
+    <a href="{{ route('beritaacara.print', $data->id) }}" 
+       class="btn-icon btn-delete" 
+       title="Print" 
+       target="_blank">
+      <i class="fas fa-print"style="color:#dc3545;"></i>
+    </a>
+
+    {{-- Delete --}}
+    <form action="{{ route('beritaacara.destroy', $data->id) }}" 
+          method="POST" 
+          style="display: inline;" 
+          onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+      @csrf
+      @method('DELETE')
+      <button type="submit" 
+              class="btn-icon btn-delete" 
+              title="Hapus">
+        <i class="fas fa-trash"></i>
+      </button>
+    </form>
+
+  </div>
+</td>
             </tr>
           @endforeach
         </tbody>

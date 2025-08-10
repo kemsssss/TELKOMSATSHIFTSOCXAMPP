@@ -24,6 +24,8 @@ Route::put('/table/{id}', [BeritaAcaraController::class, 'update'])->name('table
 Route::delete('/table/{id}', [BeritaAcaraController::class, 'destroy'])->name('table.destroy');
 Route::put('/beritaacara/{id}', [BeritaAcaraController::class, 'update'])->name('beritaacara.update');
 Route::get('/beritaacara/{id}/print', [BeritaAcaraController::class, 'print'])->name('beritaacara.print');
+Route::delete('/beritaacara/{id}', [BeritaAcaraController::class, 'destroy'])->name('beritaacara.destroy');
+
 
 
 

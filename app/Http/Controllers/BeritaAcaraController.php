@@ -45,13 +45,18 @@ public function cetakPDF(Request $request) {
     $logo = $this->getBase64FromStorage('logotelkomsat/Logo-Telkomsat.png');
 
     $cekDuplikat = BeritaAcara::where('tanggal_shift', $validated['tanggal_shift'])
-        ->where('lama_shift', $validated['lama_shift'])
-        ->where('baru_shift', $validated['baru_shift'])
-        ->first();
+    ->where('lama_shift', $validated['lama_shift'])
+    ->whereHas('petugasLama', function ($q) use ($validated) {
+        $q->whereIn('petugas_id', $validated['petugas_lama']);
+    })
+    ->exists();
 
-    if ($cekDuplikat) {
-        return redirect()->back()->with('error', 'Data shift ini sudah pernah disimpan.');
+if ($cekDuplikat) {
+    $tanggalKemarin = now()->subDay()->toDateString();
+    if (!($validated['lama_shift'] == 3 && $validated['tanggal_shift'] == $tanggalKemarin)) {
+        return back()->with('error', 'Berita acara untuk shift dan tanggal ini sudah dibuat.');
     }
+}
 
     // Simpan ke DB
     $beritaAcara = BeritaAcara::create([
@@ -213,4 +218,22 @@ public function update(Request $request, $id)
         }
         return '';
     }
+
+    public function destroy($id)
+{
+    // Cari data berdasarkan ID
+    $beritaAcara = BeritaAcara::findOrFail($id);
+
+    // Jika ada relasi many-to-many, detach dulu biar data pivot ikut hilang
+    $beritaAcara->petugasLama()->detach();
+    $beritaAcara->petugasBaru()->detach();
+
+    // Hapus data utama
+    $beritaAcara->delete();
+
+    // Redirect kembali dengan pesan sukses
+    return redirect()->route('beritaacara.index')
+                     ->with('success', 'Data berhasil dihapus.');
+}
+
 }

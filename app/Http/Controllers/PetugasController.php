@@ -32,7 +32,7 @@ class PetugasController extends Controller
     {
         $request->validate([
             'nama' => 'required',
-            'nik' => 'required|unique:petugas,nik',
+            'nik' => 'nullable|unique:petugas,nik',
             'ttd' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
@@ -40,7 +40,7 @@ class PetugasController extends Controller
 
         Petugas::create([
             'nama' => $request->nama,
-            'nik' => $request->nik,
+            'nik' => $request->nik ?? '',
             'ttd' => $ttdPath,
         ]);
 
@@ -59,13 +59,13 @@ class PetugasController extends Controller
 
         $request->validate([
             'nama' => 'required',
-            'nik' => 'required|unique:petugas,nik,' . $id,
+            'nik' => 'nullable|unique:petugas,nik,' . $id,
             'ttd' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $data = [
             'nama' => $request->nama,
-            'nik' => $request->nik,
+            'nik' => $request->nik ?? '',
         ];
 
         if ($request->hasFile('ttd')) {
