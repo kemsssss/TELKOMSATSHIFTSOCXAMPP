@@ -29,6 +29,10 @@ class BeritaAcara extends Model
         'lama_ttd',
         'baru_ttd',
         'tanggal_shift',
+        'prtg1',
+        'prtg_status1',
+        'prtg2', 
+        'prtg_status2',
     ];
 
     protected $casts = [

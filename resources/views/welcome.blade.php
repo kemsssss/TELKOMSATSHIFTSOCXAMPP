@@ -135,35 +135,33 @@
         <input type="text" name="magnus[]" placeholder="Masukkan laporan Magnus (Jika Ingin Menambahkan Klik enter)">
       </div>
 
-      
-
     </div>
     </ul>
 
 
         <div class="section">
-          <h3>PRTG</h3>
-         <div id="prtg1-group" style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
-    <div style="flex: 2;">
-        <label>PRTG 1:</label>
-        <input type="text" name="prtg1[]" placeholder="Masukkan laporan PRTG 1 (Jika Ingin Menambahkan Klik enter)">
-    </div>
-    <div style="flex: 1;">
-        <label>Status:</label>
-        <input type="text" name="prtg1_status[]" placeholder="Status">
-    </div>
+          <h3>PRTG BAKTI</h3>
+
+      <div>
+    <label for="prtg1" class="block font-semibold">PRTG 1 (Link)</label>
+    <input type="text" name="prtg1" id="prtg1" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 1 (Jika Ingin Menambahkan Klik enter)">
+      </div>
+
+<div>
+    <label for="prtg_status1" class="block font-semibold">PRTG Status 1</label>
+    <input type="text" name="prtg_status1" id="prtg_status1" class="border rounded w-full p-2" placeholder="Status PRTG 1 (Jika Ingin Menambahkan Klik enter)">
 </div>
 
-<div id="prtg2-group" style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
-    <div style="flex: 2;">
-        <label>PRTG 2:</label>
-        <input type="text" name="prtg2[]" placeholder="Masukkan laporan PRTG 2 (Jika Ingin Menambahkan Klik enter)">
-    </div>
-    <div style="flex: 1;">
-        <label>Status:</label>
-        <input type="text" name="prtg2_status[]" placeholder="Status">
-    </div>
+<div>
+    <label for="prtg2" class="block font-semibold">PRTG 2 (Link)</label>
+    <input type="text" name="prtg2" id="prtg2" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 2(Jika Ingin Menambahkan Klik enter)">
 </div>
+
+<div>
+    <label for="prtg_status2" class="block font-semibold">PRTG Status 2</label>
+    <input type="text" name="prtg_status2" id="prtg_status2" class="border rounded w-full p-2" placeholder="Status PRTG 2(Jika Ingin Menambahkan Klik enter)">
+</div>
+
     </div>  
 
     <div class="section">

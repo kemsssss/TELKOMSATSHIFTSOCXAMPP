@@ -24,6 +24,10 @@ public function cetakPDF(Request $request) {
         'lama_shift'      => 'required|string',
         'baru_shift'      => 'required|string',
         'tanggal_shift'   => 'required|date',
+        'prtg1'           => 'nullable|string',
+        'prtg_status1'    => 'nullable|string',
+        'prtg2'           => 'nullable|string',
+        'prtg_status2'    => 'nullable|string',
     ]);
 
     $petugasLama = Petugas::whereIn('id', $validated['petugas_lama'])->get();
@@ -73,6 +77,10 @@ if ($cekDuplikat) {
         'vpn'            => implode("\n", $request->input('vpn', [])),
         'edr'            => implode("\n", $request->input('edr', [])),
         'daily_report'   => implode("\n", $request->input('magnus', [])),
+        'prtg1'          => $request->input('prtg1'),
+        'prtg_status1'   => $request->input('prtg_status1'),
+        'prtg2'          => $request->input('prtg2'),
+        'prtg_status2'   => $request->input('prtg_status2'),
     ]);
 
     $beritaAcara->petugasLama()->sync($validated['petugas_lama']);
@@ -102,6 +110,10 @@ if ($cekDuplikat) {
         'baru_nama'      => $lastPetugasBaru->nama ?? '-',
         'baru_nik'       => $lastPetugasBaru->nik ?? '-',
         'logo'           => $logo,
+        'prtg1'          => $request->input('prtg1'),
+        'prtg_status1'   => $request->input('prtg_status1'),
+        'prtg2'          => $request->input('prtg2'),
+        'prtg_status2'   => $request->input('prtg_status2'),
     ];
 
     return Pdf::loadView('berita-acara', $data)->stream('serah-terima-shift-SOC.pdf');
@@ -139,6 +151,11 @@ if ($cekDuplikat) {
             'baru_nama'      => $lastPetugasBaru->nama ?? '-',
             'baru_nik'       => $lastPetugasBaru->nik ?? '-',
             'logo'           => $this->getBase64FromStorage('logotelkomsat/Logo-Telkomsat.png'),
+            'prtg1'        => $beritaAcara->prtg1,
+            'prtg_status1' => $beritaAcara->prtg_status1,
+            'prtg2'        => $beritaAcara->prtg2,
+            'prtg_status2' => $beritaAcara->prtg_status2,
+
         ];
     
         return Pdf::loadView('berita-acara', $data)->stream('Serah Terima Shift SOC.pdf');
@@ -187,6 +204,10 @@ public function update(Request $request, $id)
         'lama_shift'   => 'nullable|string',
         'baru_shift'   => 'nullable|string',
         'tanggal_shift' => 'nullable|date',
+        'prtg1'         => 'nullable|string',
+        'prtg_status1'  => 'nullable|string',
+        'prtg2'         => 'nullable|string',
+        'prtg_status2'  => 'nullable|string',
     ]);
 
     $beritaAcara = BeritaAcara::findOrFail($id);

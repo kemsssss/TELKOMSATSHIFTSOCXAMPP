@@ -127,6 +127,12 @@
             <th>VPN</th>
             <th>EDR</th>
             <th>Daily Report Magnus</th>
+            <th>PRTG 1</th>
+            <th>Status PRTG 1</th>
+            <th>PRTG 2</th>
+            <th>Status PRTG 2</th>
+
+
             <th>Aksi</th>
           </tr>
         </thead>
@@ -157,6 +163,13 @@
               <td>{!! nl2br(str_replace(',', "\n", e($data->vpn))) !!}</td>
               <td>{!! nl2br(str_replace(',', "\n", e($data->edr))) !!}</td>
               <td>{!! nl2br(e($data->daily_report)) !!}</td>
+              <td>{!! nl2br(e($data->prtg1)) !!}</td>
+              <td>{!! nl2br(e($data->prtg_status1)) !!}</td>
+              <td>{!! nl2br(e($data->prtg2)) !!}</td>
+              <td>{!! nl2br(e($data->prtg_status2)) !!}</td>
+
+
+
 
               <td style="white-space: nowrap;">
   <div style="display: flex; gap: 6px; align-items: center;">

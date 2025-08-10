@@ -110,33 +110,58 @@
 <div class="section">
   <p>Pada hari <strong>{{ $tanggal_shift }}</strong>, dengan ini kami melakukan pergantian shift SOC dengan detail pekerjaan sebagai berikut:</p>
 
-  <ol>
-    <li>
-      <strong>Tiket yang dibuat:</strong><br>
-      {{ trim($tiket_nomor ?? '') !== '' ? $tiket_nomor : '-' }}
-    </li>
+<ol>
+  <li>
+    <strong>Tiket yang dibuat:</strong><br>
+    {{ trim($tiket_nomor ?? '') !== '' ? $tiket_nomor : '-' }}
+  </li>
 
-    <li>
-      <strong>Auto Blocking SOAR:</strong>
-      <ul>
-        <li>SangFOR = {{ trim($sangfor ?? '') !== '' ? $sangfor : '-' }}</li>
-        <li>Forti-JTN = {{ trim($fortijtn ?? '') !== '' ? $fortijtn : '-' }}</li>
-        <li>FortiWeb = {{ trim($fortiweb ?? '') !== '' ? $fortiweb : '-' }}</li>
-        <li>CheckPoint = {{ trim($checkpoint ?? '') !== '' ? $checkpoint : '-' }}</li>
-      </ul>
-    </li>
+  <li>
+    <strong>Auto Blocking SOAR:</strong>
+    <ul>
+      <li>SangFOR = {{ trim($sangfor ?? '') !== '' ? $sangfor : '-' }}</li>
+      <li>Forti-JTN = {{ trim($fortijtn ?? '') !== '' ? $fortijtn : '-' }}</li>
+      <li>FortiWeb = {{ trim($fortiweb ?? '') !== '' ? $fortiweb : '-' }}</li>
+      <li>CheckPoint = {{ trim($checkpoint ?? '') !== '' ? $checkpoint : '-' }}</li>
+    </ul>
+  </li>
 
-    <li>
-      <strong>Manual Blocking dan FollowUP:</strong>
-      <ul>
-        <li>Sophos IP = {{ !empty($sophos_ip) ? implode(', ', $sophos_ip) : '-' }}</li>
-        <li>Sophos URL = {{ !empty($sophos_url) ? implode(', ', $sophos_url) : '-' }}</li>
-        <li>VPN = {{ !empty($vpn) ? implode(', ', $vpn) : '-' }}</li>
-        <li>EDR = {{ !empty($edr) ? implode(', ', $edr) : '-' }}</li>
-        <li>Daily Report Magnus = {{ !empty($magnus) ? implode(', ', $magnus) : '-' }}</li>
-      </ul>
-    </li>
-  </ol>
+  <li>
+    <strong>Manual Blocking dan FollowUP:</strong>
+    <ul>
+      <li>Sophos IP = {{ !empty($sophos_ip) ? implode(', ', $sophos_ip) : '-' }}</li>
+      <li>Sophos URL = {{ !empty($sophos_url) ? implode(', ', $sophos_url) : '-' }}</li>
+      <li>VPN = {{ !empty($vpn) ? implode(', ', $vpn) : '-' }}</li>
+      <li>EDR = {{ !empty($edr) ? implode(', ', $edr) : '-' }}</li>
+      <li>Daily Report Magnus = {{ !empty($magnus) ? implode(', ', $magnus) : '-' }}</li>
+    </ul>
+  </li>
+
+  <li>
+    <strong>PRTG Monitoring:</strong>
+    <ul>
+      <li>
+        PRTG 1 = 
+        @if (!empty($prtg1))
+          <a href="{{ $prtg1 }}" target="_blank">{{ $prtg1 }}</a>
+        @else
+          -
+        @endif
+        (Status: {{ trim($prtg_status1 ?? '') !== '' ? $prtg_status1 : '-' }})
+      </li>
+      <li>
+        PRTG 2 = 
+        @if (!empty($prtg2))
+          <a href="{{ $prtg2 }}" target="_blank">{{ $prtg2 }}</a>
+        @else
+          -
+        @endif
+        (Status: {{ trim($prtg_status2 ?? '') !== '' ? $prtg_status2 : '-' }})
+      </li>
+    </ul>
+  </li>
+</ol>
+
 </div>
 
 <div class="section">
