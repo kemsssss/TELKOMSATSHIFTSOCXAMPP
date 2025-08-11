@@ -139,29 +139,30 @@
     </ul>
 
 
-    <div class="section">
-  <h3>PRTG BAKTI</h3>
+        <div class="section">
+          <h3>PRTG BAKTI</h3>
 
-  <div id="prtg1-group">
+      <div>
     <label for="prtg1" class="block font-semibold">PRTG 1 (Link)</label>
-    <input type="text" name="prtg1[]" id="prtg1" placeholder="Masukkan link PRTG 1 (Enter untuk tambah)">
-  </div>
+    <input type="text" name="prtg1" id="prtg1" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 1 (Jika Ingin Menambahkan Klik enter)">
+      </div>
 
-  <div id="prtg_status1-group">
+<div>
     <label for="prtg_status1" class="block font-semibold">PRTG Status 1</label>
-    <input type="text" name="prtg_status1[]" id="prtg_status1" placeholder="Status PRTG 1 (Enter untuk tambah)">
-  </div>
-
-  <div id="prtg2-group">
-    <label for="prtg2" class="block font-semibold">PRTG 2 (Link)</label>
-    <input type="text" name="prtg2[]" id="prtg2" placeholder="Masukkan link PRTG 2 (Enter untuk tambah)">
-  </div>
-
-  <div id="prtg_status2-group">
-    <label for="prtg_status2" class="block font-semibold">PRTG Status 2</label>
-    <input type="text" name="prtg_status2[]" id="prtg_status2" placeholder="Status PRTG 2 (Enter untuk tambah)">
-  </div>
+    <input type="text" name="prtg_status1" id="prtg_status1" class="border rounded w-full p-2" placeholder="Status PRTG 1 (Jika Ingin Menambahkan Klik enter)">
 </div>
+
+<div>
+    <label for="prtg2" class="block font-semibold">PRTG 2 (Link)</label>
+    <input type="text" name="prtg2" id="prtg2" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 2(Jika Ingin Menambahkan Klik enter)">
+</div>
+
+<div>
+    <label for="prtg_status2" class="block font-semibold">PRTG Status 2</label>
+    <input type="text" name="prtg_status2" id="prtg_status2" class="border rounded w-full p-2" placeholder="Status PRTG 2(Jika Ingin Menambahkan Klik enter)">
+</div>
+
+    </div>  
 
     <div class="section">
       <p>Demikian berita acara ini dibuat dengan sebenar-benarnya sebagai bukti telah dilakukan serah terima shift SOC Telkomsat.</p>
