@@ -139,30 +139,29 @@
     </ul>
 
 
-        <div class="section">
-          <h3>PRTG BAKTI</h3>
+    <div class="section">
+  <h3>PRTG BAKTI</h3>
 
-      <div>
+  <div id="prtg1-group">
     <label for="prtg1" class="block font-semibold">PRTG 1 (Link)</label>
-    <input type="text" name="prtg1" id="prtg1" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 1 (Jika Ingin Menambahkan Klik enter)">
-      </div>
+    <input type="text" name="prtg1[]" id="prtg1" placeholder="Masukkan link PRTG 1 (Enter untuk tambah)">
+  </div>
 
-<div>
+  <div id="prtg_status1-group">
     <label for="prtg_status1" class="block font-semibold">PRTG Status 1</label>
-    <input type="text" name="prtg_status1" id="prtg_status1" class="border rounded w-full p-2" placeholder="Status PRTG 1 (Jika Ingin Menambahkan Klik enter)">
-</div>
+    <input type="text" name="prtg_status1[]" id="prtg_status1" placeholder="Status PRTG 1 (Enter untuk tambah)">
+  </div>
 
-<div>
+  <div id="prtg2-group">
     <label for="prtg2" class="block font-semibold">PRTG 2 (Link)</label>
-    <input type="text" name="prtg2" id="prtg2" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 2(Jika Ingin Menambahkan Klik enter)">
-</div>
+    <input type="text" name="prtg2[]" id="prtg2" placeholder="Masukkan link PRTG 2 (Enter untuk tambah)">
+  </div>
 
-<div>
+  <div id="prtg_status2-group">
     <label for="prtg_status2" class="block font-semibold">PRTG Status 2</label>
-    <input type="text" name="prtg_status2" id="prtg_status2" class="border rounded w-full p-2" placeholder="Status PRTG 2(Jika Ingin Menambahkan Klik enter)">
+    <input type="text" name="prtg_status2[]" id="prtg_status2" placeholder="Status PRTG 2 (Enter untuk tambah)">
+  </div>
 </div>
-
-    </div>  
 
     <div class="section">
       <p>Demikian berita acara ini dibuat dengan sebenar-benarnya sebagai bukti telah dilakukan serah terima shift SOC Telkomsat.</p>
@@ -246,6 +245,10 @@ setupDynamicInput('sophos-url-group', 'sophos_url');
 setupDynamicInput('vpn-group', 'vpn');
 setupDynamicInput('edr-group', 'edr');
 setupDynamicInput('magnus-group', 'magnus');
+setupDynamicInput('prtg1-group', 'prtg1');
+setupDynamicInput('prtg_status1-group', 'prtg_status1');
+setupDynamicInput('prtg2-group', 'prtg2');
+setupDynamicInput('prtg_status2-group', 'prtg_status2');
 </script>
 
 <script>

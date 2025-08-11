@@ -325,6 +325,26 @@
             <textarea name="tiket" id="tiket">{{ $beritaAcara->tiket }}</textarea>
         </div>
 
+        <h3>PRTG Bakti</h3>
+        <div class="form-row">
+            <div>
+                <label for="prtg1">PRTG 1 (Link)</label>
+                <textarea name="prtg1" id="prtg1">{{ $beritaAcara->prtg1 }}</textarea>
+            </div>
+            <div>
+                <label for="prtgstatus1">PRTG Status 1</label>
+                <textarea name="prtg_status1" id="prtg_status1">{{ $beritaAcara->prtg_status1 }}</textarea>
+            </div>
+            <div>
+                <label for="prtg2">PRTG 2 (Label)</label>
+                <textarea name="prtg2" id="prtg2">{{ $beritaAcara->prtg2 }}</textarea>
+            </div>
+            <div>
+                <label for="prtgstatus2">PRTG Status 2</label>
+                <textarea name="prtg_status2" id="prtg_status2">{{ $beritaAcara->prtg_status2 }}</textarea>
+            </div>
+        </div>
+
         <h3>🛡️ Tools Keamanan</h3>
         <div class="form-row">
             <div>
