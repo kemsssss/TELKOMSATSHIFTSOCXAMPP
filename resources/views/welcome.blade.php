@@ -142,27 +142,40 @@
         <div class="section">
           <h3>PRTG BAKTI</h3>
 
-      <div>
+          <div id="prtg1">
     <label for="prtg1" class="block font-semibold">PRTG 1 (Link)</label>
-    <input type="text" name="prtg1" id="prtg1" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 1 (Jika Ingin Menambahkan Klik enter)">
-      </div>
+    <textarea 
+        name="prtg1[]" 
+        class="border rounded w-full p-2 mt-1 resize-none" 
+        placeholder="Masukkan link PRTG 1"
+        style="height: 80px; background-color: #f9f9f9; font-size: 14px;"></textarea>
+</div>
 
-<div>
+<div id="prtg_status1">
     <label for="prtg_status1" class="block font-semibold">PRTG Status 1</label>
-    <input type="text" name="prtg_status1" id="prtg_status1" class="border rounded w-full p-2" placeholder="Status PRTG 1 (Jika Ingin Menambahkan Klik enter)">
+    <textarea 
+        name="prtg_status1[]" 
+        class="border rounded w-full p-2 mt-1 resize-none" 
+        placeholder="Masukkan status PRTG 1"></textarea>
 </div>
 
-<div>
+<div id="prtg2">
     <label for="prtg2" class="block font-semibold">PRTG 2 (Link)</label>
-    <input type="text" name="prtg2" id="prtg2" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 2(Jika Ingin Menambahkan Klik enter)">
+    <textarea 
+        name="prtg2[]" 
+        class="border rounded w-full p-2 mt-1 resize-none" 
+        placeholder="Masukkan link PRTG 2 (Tekan Enter untuk baris baru)"></textarea>
 </div>
 
-<div>
+<div id="prtg_status2">
     <label for="prtg_status2" class="block font-semibold">PRTG Status 2</label>
-    <input type="text" name="prtg_status2" id="prtg_status2" class="border rounded w-full p-2" placeholder="Status PRTG 2(Jika Ingin Menambahkan Klik enter)">
+    <textarea 
+        name="prtg_status2[]" 
+        class="border rounded w-full p-2 mt-1 resize-none" 
+        placeholder="Masukkan link status PRTG 2 (Tekan Enter untuk baris baru)"></textarea>
 </div>
 
-    </div>  
+  </div>
 
     <div class="section">
       <p>Demikian berita acara ini dibuat dengan sebenar-benarnya sebagai bukti telah dilakukan serah terima shift SOC Telkomsat.</p>
@@ -206,40 +219,49 @@ p
     </div>
     </div>
 
-<script>
-// 1. Input dinamis (tekan Enter)
+    <script>
 function setupDynamicInput(groupId, inputName) {
   const group = document.getElementById(groupId);
 
-  group.addEventListener('keydown', function (e) {
-    if (e.target.tagName === 'INPUT' && e.key === 'Enter') {
-      e.preventDefault();
+  function addInput() {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flex items-center mt-2';
 
-      if (e.target.value.trim() === '') return;
+    const newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.name = inputName + '[]';
+    newInput.placeholder = 'Masukkan PRTG';
+    newInput.className = 'border rounded w-full p-2';
 
-      const wrapper = document.createElement('div');
-      wrapper.className = 'input-wrapper';
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'ml-2 text-red-500';
+    deleteBtn.textContent = '🗑️';
+    deleteBtn.onclick = () => group.removeChild(wrapper);
 
-      const newInput = document.createElement('input');
-      newInput.type = 'text';
-      newInput.name = inputName + '[]';
-      newInput.placeholder = e.target.placeholder;
-      newInput.className = e.target.className;
+    wrapper.appendChild(newInput);
+    wrapper.appendChild(deleteBtn);
+    group.appendChild(wrapper);
 
-      const deleteBtn = document.createElement('button');
-      deleteBtn.className = 'delete-btn ml-2 text-red-500';
-      deleteBtn.innerHTML = '🗑️';
-      deleteBtn.type = 'button';
-      deleteBtn.onclick = () => group.removeChild(wrapper);
+    // pasang listener Enter untuk input baru
+    newInput.addEventListener('keydown', handleEnter);
+    newInput.focus();
+  }
 
-      wrapper.appendChild(newInput);
-      wrapper.appendChild(deleteBtn);
-      group.appendChild(wrapper);
-
-      newInput.focus();
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // cegah submit
+      if (e.target.value.trim() !== '') {
+        addInput();
+      }
     }
-  });
+  }
+
+  // pasang listener Enter ke input pertama
+  const firstInput = group.querySelector('input');
+  firstInput.addEventListener('keydown', handleEnter);
 }
+
 
 setupDynamicInput('sophos-ip-group', 'sophos_ip');
 setupDynamicInput('sophos-url-group', 'sophos_url');
