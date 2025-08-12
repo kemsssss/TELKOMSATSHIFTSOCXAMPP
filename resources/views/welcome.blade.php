@@ -190,7 +190,7 @@
         <option value="{{ $p->id }}" data-nik="{{ $p->nik }}">{{ $p->nama }}</option>
     @endforeach
 </select>
-
+p
 <!-- Preview info petugas baru -->
 <div id="info_petugas_baru" class="mt-2">
     <p><strong>NIK:</strong> <span id="nik_baru"></span></p>
