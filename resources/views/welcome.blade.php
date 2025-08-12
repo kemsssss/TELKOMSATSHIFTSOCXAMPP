@@ -149,10 +149,21 @@
           <input type="text" name="edr[]" placeholder="Masukkan EDR (Jika Ingin Menambahkan Klik enter)" />
         </div>
 
-        <div id="magnus-group">
-          <label>Daily Report Magnus:</label>
-          <input type="text" name="magnus[]" placeholder="Masukkan laporan Magnus (Jika Ingin Menambahkan Klik enter)" />
-        </div>
+
+      </div>
+
+            <div class="section">
+        <h3>Daily Report Magnus:</h3>
+
+<div id="magnus-group">        
+  <textarea
+    name="magnus[]"
+    placeholder="Masukkan laporan Magnus (boleh multiline, tekan Enter untuk tambah kolom baru)"
+    class="border rounded w-full p-2 mt-1 resize-none"
+    style="height: 120px;"
+  ></textarea>
+</div>
+
       </div>
 
       <!-- PRTG BAKTI -->
@@ -311,7 +322,7 @@
 
         let newInput;
         // Jika groupId berisi 'prtg', buat textarea, bukan input
-        if (groupId.startsWith("prtg")) {
+        if (groupId.startsWith("prtg","magnus")) {
           newInput = document.createElement("textarea");
           newInput.style.height = "80px";
           newInput.style.backgroundColor = "#f9f9f9";

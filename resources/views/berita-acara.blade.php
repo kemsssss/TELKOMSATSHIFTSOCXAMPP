@@ -133,9 +133,22 @@
       <li>Sophos URL = {{ !empty($sophos_url) ? implode(', ', $sophos_url) : '-' }}</li>
       <li>VPN = {{ !empty($vpn) ? implode(', ', $vpn) : '-' }}</li>
       <li>EDR = {{ !empty($edr) ? implode(', ', $edr) : '-' }}</li>
-      <li>Daily Report Magnus = {{ !empty($magnus) ? implode(', ', $magnus) : '-' }}</li>
     </ul>
   </li>
+
+<li>
+  <strong>Daily Report Magnus :</strong>
+  @if (!empty($magnus))
+    <ul>
+      @foreach ($magnus as $item)
+        <li>{{ $item }}</li>
+      @endforeach
+    </ul>
+  @else
+    -
+  @endif
+</li>
+
 
   <li>
     <strong>PRTG Monitoring:</strong>
