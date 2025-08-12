@@ -140,42 +140,26 @@
   <li>
     <strong>PRTG Monitoring:</strong>
     <ul>
-    <li>
-  PRTG 1 = 
-  @if (!empty($prtg1) && is_array($prtg1))
-  <ul>
-    @foreach ($prtg1 as $index => $link)
       <li>
-        <a href="{{ $link }}" target="_blank">{{ $link }}</a>
-        (Status: {{ !empty($prtg_status1[$index]) ? $prtg_status1[$index] : '-' }})
+        PRTG 1 = 
+        @if (!empty($prtg1))
+          <a href="{{ $prtg1 }}" target="_blank">{{ $prtg1 }}</a>
+        @else
+          -
+        @endif
+        (Status: {{ trim($prtg_status1 ?? '') !== '' ? $prtg_status1 : '-' }})
       </li>
-    @endforeach
-  </ul>
-@elseif (!empty($prtg1))
-  <a href="{{ $prtg1 }}" target="_blank">{{ $prtg1 }}</a>
-  (Status: {{ $prtg_status1 ?? '-' }})
-@else
-@endif
-</li>
-<li>
-  PRTG 2 = 
-  @if (!empty($prtg2) && is_array($prtg2))
-  <ul>
-    @foreach ($prtg2 as $index => $link)
       <li>
-        <a href="{{ $link }}" target="_blank">{{ $link }}</a>
-        (Status: {{ !empty($prtg_status2[$index]) ? $prtg_status2[$index] : '-' }})
+        PRTG 2 = 
+        @if (!empty($prtg2))
+          <a href="{{ $prtg2 }}" target="_blank">{{ $prtg2 }}</a>
+        @else
+          -
+        @endif
+        (Status: {{ trim($prtg_status2 ?? '') !== '' ? $prtg_status2 : '-' }})
       </li>
-    @endforeach
-  </ul>
-@elseif (!empty($prtg2))
-  <a href="{{ $prtg2 }}" target="_blank">{{ $prtg2 }}</a>
-  (Status: {{ $prtg_status2 ?? '-' }})
-@else
-  -
-@endif
-</li>
-
+    </ul>
+  </li>
 </ol>
 
 </div>

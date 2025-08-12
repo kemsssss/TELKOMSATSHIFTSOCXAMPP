@@ -182,7 +182,7 @@
     </a>
 
     {{-- Print --}}
-    <a href="{{ route('beritaacara.print', $data->id) }}"
+    <a href="{{ route('beritaacara.print', $data->id) }}" 
        class="btn-icon btn-delete" 
        title="Print" 
        target="_blank">

@@ -142,40 +142,27 @@
         <div class="section">
           <h3>PRTG BAKTI</h3>
 
-          <div id="prtg1">
+      <div>
     <label for="prtg1" class="block font-semibold">PRTG 1 (Link)</label>
-    <textarea 
-        name="prtg1[]" 
-        class="border rounded w-full p-2 mt-1 resize-none" 
-        placeholder="Masukkan link PRTG 1"
-        style="height: 80px; background-color: #f9f9f9; font-size: 14px;"></textarea>
-</div>
+    <input type="text" name="prtg1" id="prtg1" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 1 (Jika Ingin Menambahkan Klik enter)">
+      </div>
 
-<div id="prtg_status1">
+<div>
     <label for="prtg_status1" class="block font-semibold">PRTG Status 1</label>
-    <textarea 
-        name="prtg_status1[]" 
-        class="border rounded w-full p-2 mt-1 resize-none" 
-        placeholder="Masukkan status PRTG 1"></textarea>
+    <input type="text" name="prtg_status1" id="prtg_status1" class="border rounded w-full p-2" placeholder="Status PRTG 1 (Jika Ingin Menambahkan Klik enter)">
 </div>
 
-<div id="prtg2">
+<div>
     <label for="prtg2" class="block font-semibold">PRTG 2 (Link)</label>
-    <textarea 
-        name="prtg2[]" 
-        class="border rounded w-full p-2 mt-1 resize-none" 
-        placeholder="Masukkan link PRTG 2 (Tekan Enter untuk baris baru)"></textarea>
+    <input type="text" name="prtg2" id="prtg2" class="border rounded w-full p-2" placeholder="Masukkan link PRTG 2(Jika Ingin Menambahkan Klik enter)">
 </div>
 
-<div id="prtg_status2">
+<div>
     <label for="prtg_status2" class="block font-semibold">PRTG Status 2</label>
-    <textarea 
-        name="prtg_status2[]" 
-        class="border rounded w-full p-2 mt-1 resize-none" 
-        placeholder="Masukkan link status PRTG 2 (Tekan Enter untuk baris baru)"></textarea>
+    <input type="text" name="prtg_status2" id="prtg_status2" class="border rounded w-full p-2" placeholder="Status PRTG 2(Jika Ingin Menambahkan Klik enter)">
 </div>
 
-  </div>
+    </div>  
 
     <div class="section">
       <p>Demikian berita acara ini dibuat dengan sebenar-benarnya sebagai bukti telah dilakukan serah terima shift SOC Telkomsat.</p>
@@ -203,7 +190,7 @@
         <option value="{{ $p->id }}" data-nik="{{ $p->nik }}">{{ $p->nama }}</option>
     @endforeach
 </select>
-p
+
 <!-- Preview info petugas baru -->
 <div id="info_petugas_baru" class="mt-2">
     <p><strong>NIK:</strong> <span id="nik_baru"></span></p>
@@ -219,49 +206,40 @@ p
     </div>
     </div>
 
-    <script>
+<script>
+// 1. Input dinamis (tekan Enter)
 function setupDynamicInput(groupId, inputName) {
   const group = document.getElementById(groupId);
 
-  function addInput() {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'flex items-center mt-2';
+  group.addEventListener('keydown', function (e) {
+    if (e.target.tagName === 'INPUT' && e.key === 'Enter') {
+      e.preventDefault();
 
-    const newInput = document.createElement('input');
-    newInput.type = 'text';
-    newInput.name = inputName + '[]';
-    newInput.placeholder = 'Masukkan PRTG';
-    newInput.className = 'border rounded w-full p-2';
+      if (e.target.value.trim() === '') return;
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.type = 'button';
-    deleteBtn.className = 'ml-2 text-red-500';
-    deleteBtn.textContent = '🗑️';
-    deleteBtn.onclick = () => group.removeChild(wrapper);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'input-wrapper';
 
-    wrapper.appendChild(newInput);
-    wrapper.appendChild(deleteBtn);
-    group.appendChild(wrapper);
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.name = inputName + '[]';
+      newInput.placeholder = e.target.placeholder;
+      newInput.className = e.target.className;
 
-    // pasang listener Enter untuk input baru
-    newInput.addEventListener('keydown', handleEnter);
-    newInput.focus();
-  }
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'delete-btn ml-2 text-red-500';
+      deleteBtn.innerHTML = '🗑️';
+      deleteBtn.type = 'button';
+      deleteBtn.onclick = () => group.removeChild(wrapper);
 
-  function handleEnter(e) {
-    if (e.key === 'Enter') {
-      e.preventDefault(); // cegah submit
-      if (e.target.value.trim() !== '') {
-        addInput();
-      }
+      wrapper.appendChild(newInput);
+      wrapper.appendChild(deleteBtn);
+      group.appendChild(wrapper);
+
+      newInput.focus();
     }
-  }
-
-  // pasang listener Enter ke input pertama
-  const firstInput = group.querySelector('input');
-  firstInput.addEventListener('keydown', handleEnter);
+  });
 }
-
 
 setupDynamicInput('sophos-ip-group', 'sophos_ip');
 setupDynamicInput('sophos-url-group', 'sophos_url');

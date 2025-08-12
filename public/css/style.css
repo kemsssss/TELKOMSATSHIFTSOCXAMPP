@@ -336,17 +336,6 @@
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
   }
-
-  textarea {
-    width: 100%;
-    min-height: 70px;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-}
-
   
   /* Submit Button */
   button[type="submit"] {
