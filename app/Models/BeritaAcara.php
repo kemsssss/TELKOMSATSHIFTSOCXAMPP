@@ -33,6 +33,8 @@ class BeritaAcara extends Model
         'prtg_status1',
         'prtg2', 
         'prtg_status2',
+        'nomortiket_magnus',
+        'detail_magnus',
     ];
 
     protected $casts = [
@@ -40,7 +42,8 @@ class BeritaAcara extends Model
         'sophos_url' => 'array',
         'vpn' => 'array',
         'edr' => 'array',
-        'daily_report' => 'array',
+        'nomortiket_magnus' => 'array', 
+        'detail_magnus'=> 'array',
     ];
 
     public function petugasLama()

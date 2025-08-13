@@ -104,6 +104,7 @@
 
   <div class="main-content">
     <h1>Tabel Berita Acara Shift SOC Telkomsat</h1>
+    
 
     <div class="table-container">
       <table>
@@ -130,6 +131,7 @@
             <th>Status PRTG 1</th>
             <th>PRTG 2</th>
             <th>Status PRTG 2</th>
+            <th>Nomor Tiket Magnus</th>
             <th>Daily Report Magnus</th>
 
 
@@ -166,7 +168,8 @@
               <td>{!! nl2br(e($data->prtg_status1)) !!}</td>
               <td>{!! nl2br(e($data->prtg2)) !!}</td>
               <td>{!! nl2br(e($data->prtg_status2)) !!}</td>
-              <td>{!! nl2br(e($data->daily_report)) !!}</td>
+              <td>{!! nl2br(e($data->nomortiket_magnus)) !!}</td>
+              <td>{!! nl2br(e($data->detail_magnus)) !!}</td>
 
 
 

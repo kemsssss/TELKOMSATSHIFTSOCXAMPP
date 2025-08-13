@@ -186,13 +186,13 @@ public function print($id)
             'web'          => 'nullable|string',
             'checkpoint'   => 'nullable|string',
             // allow array inputs on update (same shape as create)
-            'sophos_ip'    => 'nullable|array',
+            'sophos_ip'    => 'nullable|string',
             'sophos_ip.*'  => 'nullable|string',
-            'sophos_url'   => 'nullable|array',
+            'sophos_url'   => 'nullable|string',
             'sophos_url.*' => 'nullable|string',
-            'vpn'          => 'nullable|array',
+            'vpn'          => 'nullable|string',
             'vpn.*'        => 'nullable|string',
-            'edr'          => 'nullable|array',
+            'edr'          => 'nullable|string',
             'edr.*'        => 'nullable|string',
             'petugas_lama' => 'nullable|array',
             'petugas_lama.*' => 'exists:petugas,id',
@@ -209,10 +209,10 @@ public function print($id)
             'prtg2.*'       => 'nullable|string',
             'prtg_status2'  => 'nullable|string',
             'prtg_status2.*'=> 'nullable|string',
-                'nomortiket_magnus'   => 'nullable|array',
-    'nomortiket_magnus.*' => 'nullable|string',
-    'detail_magnus'       => 'nullable|array',
-    'detail_magnus.*'     => 'nullable|string',
+            'nomortiket_magnus'   => 'nullable|string',
+            'nomortiket_magnus.*' => 'nullable|string',
+            'detail_magnus'       => 'nullable|string',
+            'detail_magnus.*'     => 'nullable|string',
         ]);
 
         $beritaAcara = BeritaAcara::findOrFail($id);

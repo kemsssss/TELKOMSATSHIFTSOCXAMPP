@@ -251,6 +251,30 @@
 
 <div class="main-content">
     <h1>📜 Edit Data Berita Acara Shift</h1>
+    @if (session('success'))
+    <div id="success-alert" style="
+        background-color: #d1fae5;
+        color: #065f46;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid #a7f3d0;
+        font-weight: 500;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    ">
+        ✅ {{ session('success') }}
+    </div>
+    <script>
+        setTimeout(() => {
+            const alertBox = document.getElementById('success-alert');
+            if (alertBox) {
+                alertBox.style.transition = 'opacity 0.5s';
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500);
+            }
+        }, 3000);
+    </script>
+@endif
 
     <form action="{{ route('beritaacara.update', $beritaAcara->id) }}" method="POST">
         @csrf
@@ -391,8 +415,10 @@
 
         <h3>Daily Report Magnus</h3>
         <div>
-                <label for="daily_report">📄 Daily Report Magnus</label>
-                <textarea name="daily_report" id="daily_report">{{ $beritaAcara->daily_report }}</textarea>
+                <label for="nomortiket_magnus">📄 Nomor Tiket</label>
+                <textarea name="nomortiket_magnus">{{ $beritaAcara->nomortiket_magnus }}</textarea>
+                <label for="detail_magnus">📄 Daily Report Magnus</label>
+                <textarea name="detail_magnus">{{ $beritaAcara->detail_magnus }}</textarea>
             </div>
         </div>      
         <div>
