@@ -320,12 +320,56 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label for="tiket">🎫 No Tiket</label>
-            <textarea name="tiket" id="tiket">{{ $beritaAcara->tiket }}</textarea>
-        </div>
+<div class="mb-3">
+    <label for="tiket">🎫 No Tiket</label>
+    <input type="text" name="tiket" id="tiket" value="{{ $beritaAcara->tiket }}">
+</div>
 
-        <h3>PRTG Bakti</h3>
+<h3>🛡️ Tools Keamanan</h3>
+<div class="form-row">
+    <div>
+        <label for="sangfor">🛡️ Sangfor (SOAR)</label>
+        <input type="text" name="sangfor" id="sangfor" value="{{ $beritaAcara->sangfor }}">
+    </div>
+    <div>
+        <label for="jtn">🛡️ FortiJTN</label>
+        <input type="text" name="jtn" id="jtn" value="{{ $beritaAcara->jtn }}">
+    </div>
+    <div>
+        <label for="web">🛡️ FortiWeb</label>
+        <input type="text" name="web" id="web" value="{{ $beritaAcara->web }}">
+    </div>
+</div>
+
+<div class="form-row">
+    <div>
+        <label for="checkpoint">🛡️ Checkpoint</label>
+        <input type="text" name="checkpoint" id="checkpoint" value="{{ $beritaAcara->checkpoint }}">
+    </div>
+    <div>
+        <label for="sophos_ip">🌐 Sophos IP</label>
+        <input type="text" name="sophos_ip" id="sophos_ip" value="{{ $beritaAcara->sophos_ip }}">
+    </div>
+    <div>
+        <label for="sophos_url">🔗 Sophos URL</label>
+        <input type="text" name="sophos_url" id="sophos_url" value="{{ $beritaAcara->sophos_url }}">
+    </div>
+</div>
+
+<div class="form-row">
+    <div>
+        <label for="vpn">🔐 VPN</label>
+        <input type="text" name="vpn" id="vpn" value="{{ $beritaAcara->vpn }}">
+    </div>
+    <div>
+        <label for="edr">🧠 EDR</label>
+        <input type="text" name="edr" id="edr" value="{{ $beritaAcara->edr }}">
+    </div>
+</div>
+
+            
+
+                <h3>PRTG Bakti</h3>
         <div class="form-row">
             <div>
                 <label for="prtg1">PRTG 1 (Link)</label>
@@ -345,56 +389,17 @@
             </div>
         </div>
 
-        <h3>🛡️ Tools Keamanan</h3>
-        <div class="form-row">
-            <div>
-                <label for="sangfor">🛡️ Sangfor (SOAR)</label>
-                <textarea name="sangfor" id="sangfor">{{ $beritaAcara->sangfor }}</textarea>
-            </div>
-            <div>
-                <label for="jtn">🛡️ FortiJTN</label>
-                <textarea name="jtn" id="jtn">{{ $beritaAcara->jtn }}</textarea>
-            </div>
-            <div>
-                <label for="web">🛡️ FortiWeb</label>
-                <textarea name="web" id="web">{{ $beritaAcara->web }}</textarea>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div>
-                <label for="checkpoint">🛡️ Checkpoint</label>
-                <textarea name="checkpoint" id="checkpoint">{{ $beritaAcara->checkpoint }}</textarea>
-            </div>
-            <div>
-                <label for="sophos_ip">🌐 Sophos IP</label>
-                <textarea name="sophos_ip" id="sophos_ip">{{ $beritaAcara->sophos_ip }}</textarea>
-            </div>
-            <div>
-                <label for="sophos_url">🔗 Sophos URL</label>
-                <textarea name="sophos_url" id="sophos_url">{{ $beritaAcara->sophos_url }}</textarea>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div>
-                <label for="vpn">🔐 VPN</label>
-                <textarea name="vpn" id="vpn">{{ $beritaAcara->vpn }}</textarea>
-            </div>
-            <div>
-                <label for="edr">🧠 EDR</label>
-                <textarea name="edr" id="edr">{{ $beritaAcara->edr }}</textarea>
-            </div>
-            <div>
+        <h3>Daily Report Magnus</h3>
+        <div>
                 <label for="daily_report">📄 Daily Report Magnus</label>
                 <textarea name="daily_report" id="daily_report">{{ $beritaAcara->daily_report }}</textarea>
             </div>
-        </div>
-
+        </div>      
+        <div>
         <button type="submit">💾 Simpan Perubahan</button>
     </form>
 </div>
-
+</div>
 <script>
 function tambahPetugas(tipe) {
     const container = document.getElementById(`petugas${tipe}Container`);

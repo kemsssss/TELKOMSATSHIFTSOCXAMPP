@@ -152,19 +152,7 @@
 
       </div>
 
-            <div class="section">
-        <h3>Daily Report Magnus:</h3>
 
-<div id="magnus-group">        
-  <textarea
-    name="magnus[]"
-    placeholder="Masukkan laporan Magnus (boleh multiline, tekan Enter untuk tambah kolom baru)"
-    class="border rounded w-full p-2 mt-1 resize-none"
-    style="height: 120px;"
-  ></textarea>
-</div>
-
-      </div>
 
       <!-- PRTG BAKTI -->
       <div class="section">
@@ -208,6 +196,28 @@
         </div>
       </div>
 
+<div class="section">
+  <h3>Daily Report Magnus:</h3>
+
+  <div id="magnus-group">
+    <div class="magnus-item border rounded p-3 mb-3">
+      <label>Nomor Tiket:</label>
+      <input type="text" name="nomortiket_magnus[]" class="border rounded w-full p-2 mb-2" placeholder="Contoh: #258106813">
+
+      <label>Detail Laporan:</label>
+      <textarea name="detail_magnus[]" placeholder="Masukkan detail laporan, 1 baris untuk 1 item" class="border rounded w-full p-2 resize-none" style="height: 120px;"></textarea>
+
+      <button type="button" class="btn-hapus" onclick="hapusMagnus(this)">Hapus Tiket</button>
+    </div>
+  </div>
+
+  <button type="button" onclick="tambahMagnus()" style="background-color:#007bff;color:white;padding:6px 12px;border:none;border-radius:4px;margin-top:5px;">
+    + Tambah Tiket Magnus
+  </button>
+</div>
+
+
+
       <div class="section" style="margin-top: 20px;">
         <p>
           Demikian berita acara ini dibuat dengan sebenar-benarnya sebagai bukti telah dilakukan serah terima shift SOC Telkomsat.
@@ -247,6 +257,33 @@
 </button>
     </form>
   </div>
+
+  <script>
+  function tambahMagnus() {
+    const group = document.getElementById('magnus-group');
+    const item = document.createElement('div');
+    item.className = 'magnus-item border rounded p-3 mb-3';
+    item.innerHTML = `
+      <label>Nomor Tiket:</label>
+      <input type="text" name="magnus_ticket[]" class="border rounded w-full p-2 mb-2" placeholder="Contoh: #258106813">
+
+      <label>Detail Laporan:</label>
+      <textarea name="magnus_detail[]" placeholder="Masukkan detail laporan, 1 baris untuk 1 item" class="border rounded w-full p-2 resize-none" style="height: 120px;"></textarea>
+
+      <button type="button" class="btn-hapus" onclick="hapusMagnus(this)">Hapus Tiket</button>
+    `;
+    group.appendChild(item);
+  }
+
+  function hapusMagnus(button) {
+    const group = document.getElementById('magnus-group');
+    if (group.children.length > 1) {
+      button.parentElement.remove();
+    } else {
+      alert("Minimal harus ada 1 tiket Magnus");
+    }
+  }
+</script>
 
   <script>
     // Dynamic input tambah/hapus untuk Petugas Lama dan Baru
@@ -299,82 +336,104 @@
     };
   </script>
 
-  <script>
-    // Setup dynamic input dengan tombol enter untuk manual blocking dan PRTG
-    function setupDynamicInput(groupId, inputName) {
-      const group = document.getElementById(groupId);
+<style>
+  .btn-hapus {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 8px;
+    transition: background-color 0.2s;
+  }
+  .btn-hapus:hover {
+    background-color: #d9363e;
+  }
+  .input-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .input-row textarea, 
+  .input-row input {
+    flex: 1;
+  }
+</style>
 
-      const placeholderMap = {
-        "sophos-ip-group": "Masukkan IP Sophos (Jika Ingin Menambahkan Klik enter)",
-        "sophos-url-group": "Masukkan URL Sophos (Jika Ingin Menambahkan Klik enter)",
-        "vpn-group": "Masukkan VPN (Jika Ingin Menambahkan Klik enter)",
-        "edr-group": "Masukkan EDR (Jika Ingin Menambahkan Klik enter)",
-        "magnus-group": "Masukkan laporan Magnus (Jika Ingin Menambahkan Klik enter)",
-        "prtg1-group": "Masukkan link PRTG 1",
-        "prtg_status1-group": "Masukkan status PRTG 1",
-        "prtg2-group": "Masukkan link PRTG 2 (Tekan Enter untuk baris baru)",
-        "prtg_status2-group": "Masukkan status PRTG 2 (Tekan Enter untuk baris baru)",
-      };
+<script>
+  function setupDynamicInput(groupId, inputName) {
+    const group = document.getElementById(groupId);
 
-      function addInput() {
-        const wrapper = document.createElement("div");
-        wrapper.className = "flex items-center mt-2";
+    const placeholderMap = {
+      "sophos-ip-group": "Masukkan IP Sophos (Enter untuk tambah)",
+      "sophos-url-group": "Masukkan URL Sophos (Enter untuk tambah)",
+      "vpn-group": "Masukkan VPN (Enter untuk tambah)",
+      "edr-group": "Masukkan EDR (Enter untuk tambah)",
+      "magnus-group": "Masukkan laporan Magnus (Shift+Enter untuk baris baru)",
+      "prtg1-group": "Masukkan link PRTG 1",
+      "prtg_status1-group": "Masukkan status PRTG 1",
+      "prtg2-group": "Masukkan link PRTG 2 (Shift+Enter untuk baris baru)",
+      "prtg_status2-group": "Masukkan status PRTG 2 (Shift+Enter untuk baris baru)",
+    };
 
-        let newInput;
-        // Jika groupId berisi 'prtg', buat textarea, bukan input
-        if (groupId.startsWith("prtg","magnus")) {
-          newInput = document.createElement("textarea");
-          newInput.style.height = "80px";
-          newInput.style.backgroundColor = "#f9f9f9";
-          newInput.style.fontSize = "14px";
-          newInput.className = "border rounded w-full p-2 mt-1 resize-none";
-        } else {
-          newInput = document.createElement("input");
-          newInput.type = "text";
-          newInput.className = "border rounded w-full p-2";
-        }
+    function addInput() {
+      const wrapper = document.createElement("div");
+      wrapper.className = "input-row";
 
-        newInput.name = inputName + "[]";
-        newInput.placeholder = placeholderMap[groupId] || "Masukkan data";
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.type = "button";
-        deleteBtn.className = "ml-2 text-red-500";
-        deleteBtn.textContent = "🗑️";
-        deleteBtn.onclick = () => group.removeChild(wrapper);
-
-        wrapper.appendChild(newInput);
-        wrapper.appendChild(deleteBtn);
-        group.appendChild(wrapper);
-
-        newInput.addEventListener("keydown", handleEnter);
-        newInput.focus();
+      let newInput;
+      if (groupId.startsWith("prtg") || groupId.startsWith("magnus")) {
+        newInput = document.createElement("textarea");
+        newInput.style.height = "120px";
+        newInput.className = "border rounded w-full p-2 resize-none";
+      } else {
+        newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.className = "border rounded w-full p-2";
       }
 
-      function handleEnter(e) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          if (e.target.value.trim() !== "") {
-            addInput();
-          }
-        }
-      }
+      newInput.name = inputName + "[]";
+      newInput.placeholder = placeholderMap[groupId] || "Masukkan data";
 
-      // Pasang listener enter di input pertama (jika ada)
-      const firstInput = group.querySelector("input, textarea");
-      if (firstInput) firstInput.addEventListener("keydown", handleEnter);
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.className = "btn-hapus";
+      deleteBtn.textContent = "Hapus";
+      deleteBtn.onclick = () => group.removeChild(wrapper);
+
+      wrapper.appendChild(newInput);
+      wrapper.appendChild(deleteBtn);
+      group.appendChild(wrapper);
+
+      newInput.addEventListener("keydown", handleEnter);
+      newInput.focus();
     }
 
-    setupDynamicInput("sophos-ip-group", "sophos_ip");
-    setupDynamicInput("sophos-url-group", "sophos_url");
-    setupDynamicInput("vpn-group", "vpn");
-    setupDynamicInput("edr-group", "edr");
-    setupDynamicInput("magnus-group", "magnus");
-    setupDynamicInput("prtg1-group", "prtg1");
-    setupDynamicInput("prtg_status1-group", "prtg_status1");
-    setupDynamicInput("prtg2-group", "prtg2");
-    setupDynamicInput("prtg_status2-group", "prtg_status2");
-  </script>
+    function handleEnter(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        if (e.target.value.trim() !== "") {
+          addInput();
+        }
+      }
+    }
+
+    const firstInput = group.querySelector("input, textarea");
+    if (firstInput) firstInput.addEventListener("keydown", handleEnter);
+  }
+
+  setupDynamicInput("sophos-ip-group", "sophos_ip");
+  setupDynamicInput("sophos-url-group", "sophos_url");
+  setupDynamicInput("vpn-group", "vpn");
+  setupDynamicInput("edr-group", "edr");
+  setupDynamicInput("prtg1-group", "prtg1");
+  setupDynamicInput("prtg_status1-group", "prtg_status1");
+  setupDynamicInput("prtg2-group", "prtg2");
+  setupDynamicInput("prtg_status2-group", "prtg_status2");
+</script>
+
 
   <script>
     // Update jam dan tanggal realtime

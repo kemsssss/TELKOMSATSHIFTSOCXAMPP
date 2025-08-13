@@ -126,11 +126,11 @@
             <th>Sophos URL</th>
             <th>VPN</th>
             <th>EDR</th>
-            <th>Daily Report Magnus</th>
             <th>PRTG 1</th>
             <th>Status PRTG 1</th>
             <th>PRTG 2</th>
             <th>Status PRTG 2</th>
+            <th>Daily Report Magnus</th>
 
 
             <th>Aksi</th>
@@ -162,11 +162,11 @@
               <td>{!! nl2br(str_replace(',', "\n", e($data->sophos_url))) !!}</td>
               <td>{!! nl2br(str_replace(',', "\n", e($data->vpn))) !!}</td>
               <td>{!! nl2br(str_replace(',', "\n", e($data->edr))) !!}</td>
-              <td>{!! nl2br(e($data->daily_report)) !!}</td>
               <td>{!! nl2br(e($data->prtg1)) !!}</td>
               <td>{!! nl2br(e($data->prtg_status1)) !!}</td>
               <td>{!! nl2br(e($data->prtg2)) !!}</td>
               <td>{!! nl2br(e($data->prtg_status2)) !!}</td>
+              <td>{!! nl2br(e($data->daily_report)) !!}</td>
 
 
 

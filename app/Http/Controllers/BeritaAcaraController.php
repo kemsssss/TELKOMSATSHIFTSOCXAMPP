@@ -33,6 +33,10 @@ class BeritaAcaraController extends Controller
             'prtg2.*'         => 'nullable|string',
             'prtg_status2'    => 'nullable|array',
             'prtg_status2.*'  => 'nullable|string',
+                'nomortiket_magnus'   => 'nullable|array',
+    'nomortiket_magnus.*' => 'nullable|string',
+    'detail_magnus'       => 'nullable|array',
+    'detail_magnus.*'     => 'nullable|string',
         ]);
 
         $petugasLama = Petugas::whereIn('id', $validated['petugas_lama'])->get();
@@ -81,11 +85,12 @@ class BeritaAcaraController extends Controller
             'sophos_url'     => implode("\n", array_filter($request->input('sophos_url', []))),
             'vpn'            => implode("\n", array_filter($request->input('vpn', []))),
             'edr'            => implode("\n", array_filter($request->input('edr', []))),
-            'daily_report'   => implode("\n", array_filter($request->input('magnus', []))),
             'prtg1'          => implode("\n", array_filter($request->input('prtg1', []))),
             'prtg_status1'   => implode("\n", array_filter($request->input('prtg_status1', []))),
             'prtg2'          => implode("\n", array_filter($request->input('prtg2', []))),
             'prtg_status2'   => implode("\n", array_filter($request->input('prtg_status2', []))),
+            'nomortiket_magnus' => implode("\n", array_filter($request->input('nomortiket_magnus', []))),
+    'detail_magnus'     => implode("\n", array_filter($request->input('detail_magnus', []))),
         ]);
 
         $beritaAcara->petugasLama()->sync($validated['petugas_lama']);
@@ -119,6 +124,8 @@ class BeritaAcaraController extends Controller
             'prtg_status1'   => $request->input('prtg_status1', []),
             'prtg2'          => $request->input('prtg2', []),
             'prtg_status2'   => $request->input('prtg_status2', []),
+                'nomortiket_magnus' => $request->input('nomortiket_magnus', []),
+    'detail_magnus'     => $request->input('detail_magnus', []),
         ];
 
         return Pdf::loadView('berita-acara', $data)->stream('serah-terima-shift-SOC.pdf');
@@ -149,7 +156,6 @@ class BeritaAcaraController extends Controller
             'sophos_url'     => explode("\n", $beritaAcara->sophos_url ?? ''),
             'vpn'            => explode("\n", $beritaAcara->vpn ?? ''),
             'edr'            => explode("\n", $beritaAcara->edr ?? ''),
-            'magnus'         => explode("\n", $beritaAcara->daily_report ?? ''),
             'lama_ttd'       => $this->getBase64FromStorage($lastPetugasLama->ttd ?? null),
             'baru_ttd'       => $this->getBase64FromStorage($lastPetugasBaru->ttd ?? null),
             'lama_nama'      => $lastPetugasLama->nama ?? '-',
@@ -161,6 +167,9 @@ class BeritaAcaraController extends Controller
             'prtg_status1' => explode("\n", $beritaAcara->prtg_status1 ?? ''),
             'prtg2'        => explode("\n", $beritaAcara->prtg2 ?? ''),
             'prtg_status2' => explode("\n", $beritaAcara->prtg_status2 ?? ''),
+'nomortiket_magnus' => json_decode($beritaAcara->nomortiket_magnus ?? '[]', true),
+'detail_magnus'     => json_decode($beritaAcara->detail_magnus ?? '[]', true),
+
 
         ];
 
@@ -208,8 +217,6 @@ class BeritaAcaraController extends Controller
             'vpn.*'        => 'nullable|string',
             'edr'          => 'nullable|array',
             'edr.*'        => 'nullable|string',
-            'daily_report' => 'nullable|array',
-            'daily_report.*' => 'nullable|string',
             'petugas_lama' => 'nullable|array',
             'petugas_lama.*' => 'exists:petugas,id',
             'petugas_baru' => 'nullable|array',
@@ -225,15 +232,20 @@ class BeritaAcaraController extends Controller
             'prtg2.*'       => 'nullable|string',
             'prtg_status2'  => 'nullable|string',
             'prtg_status2.*'=> 'nullable|string',
+                'nomortiket_magnus'   => 'nullable|array',
+    'nomortiket_magnus.*' => 'nullable|string',
+    'detail_magnus'       => 'nullable|array',
+    'detail_magnus.*'     => 'nullable|string',
         ]);
 
         $beritaAcara = BeritaAcara::findOrFail($id);
 
         // Konversi array -> string untuk kolom multiline sebelum update
-        $fieldsToImplode = [
-            'sophos_ip','sophos_url','vpn','edr','daily_report',
-            'prtg1','prtg_status1','prtg2','prtg_status2'
-        ];
+$fieldsToImplode = [
+    'sophos_ip','sophos_url','vpn','edr',
+    'nomortiket_magnus','detail_magnus',
+    'prtg1','prtg_status1','prtg2','prtg_status2'
+];
 
         foreach ($fieldsToImplode as $field) {
             if (isset($validated[$field]) && is_array($validated[$field])) {

@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('sophos_url')->nullable();
             $table->string('vpn')->nullable();
             $table->string('edr')->nullable();
-            $table->string('daily_report')->nullable();
+            $table->string('nomortiket_magnus')->nullable(); // ganti dari daily_report
+            $table->text('detail_magnus')->nullable(); // kolom baru
             $table->timestamps();
         });
     }

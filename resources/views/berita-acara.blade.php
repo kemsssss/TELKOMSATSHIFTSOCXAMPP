@@ -136,20 +136,6 @@
     </ul>
   </li>
 
-<li>
-  <strong>Daily Report Magnus :</strong>
-  @if (!empty($magnus))
-    <ul>
-      @foreach ($magnus as $item)
-        <li>{{ $item }}</li>
-      @endforeach
-    </ul>
-  @else
-    -
-  @endif
-</li>
-
-
   <li>
     <strong>PRTG Monitoring:</strong>
     <ul>
@@ -188,6 +174,34 @@
   -
 @endif
 </li>
+
+    </ul>
+  </li>
+
+<li
+{{-- Magnus Daily Report --}}
+@if (!empty($nomortiket_magnus) && is_array($nomortiket_magnus))
+    <h3>Daily Report Magnus</h3>
+    <table border="1" cellspacing="0" cellpadding="6" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: center; width: 25%;">Nomor Tiket</th>
+                <th style="text-align: center;">Detail Laporan</th>
+            </tr>
+        </thead>
+        <tbody>
+@foreach ($nomortiket_magnus as $i => $tiket)
+    <tr>
+        <td>{{ $tiket ?: '-' }}</td>
+        <td>{!! nl2br(e($detail_magnus[$i] ?? '-')) !!}</td>
+    </tr>
+@endforeach
+
+        </tbody>
+    </table>
+@endif
+</li>
+
 
 </ol>
 
