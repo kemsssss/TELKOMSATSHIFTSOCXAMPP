@@ -180,7 +180,17 @@
 
 <li
 {{-- Magnus Daily Report --}}
-@if (!empty($nomortiket_magnus) && is_array($nomortiket_magnus))
+@php
+    // Pastikan kalau bukan array, ubah jadi array pakai explode
+    if (!is_array($nomortiket_magnus)) {
+        $nomortiket_magnus = explode('|', $nomortiket_magnus ?? '');
+    }
+    if (!is_array($detail_magnus)) {
+        $detail_magnus = explode('|', $detail_magnus ?? '');
+    }
+@endphp
+
+@if (!empty($nomortiket_magnus))
     <h3>Daily Report Magnus</h3>
     <table border="1" cellspacing="0" cellpadding="6" width="100%">
         <thead>
@@ -190,17 +200,16 @@
             </tr>
         </thead>
         <tbody>
-@foreach ($nomortiket_magnus as $i => $tiket)
-    <tr>
-        <td>{{ $tiket ?: '-' }}</td>
-        <td>{!! nl2br(e($detail_magnus[$i] ?? '-')) !!}</td>
-    </tr>
-@endforeach
-
+            @foreach ($nomortiket_magnus as $i => $tiket)
+                <tr>
+                    <td>{{ $tiket ?: '-' }}</td>
+                    <td>{!! nl2br(e($detail_magnus[$i] ?? '-')) !!}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 @endif
-</li>
+
 
 
 </ol>

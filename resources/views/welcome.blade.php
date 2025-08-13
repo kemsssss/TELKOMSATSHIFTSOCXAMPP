@@ -259,30 +259,30 @@
   </div>
 
   <script>
-  function tambahMagnus() {
-    const group = document.getElementById('magnus-group');
-    const item = document.createElement('div');
-    item.className = 'magnus-item border rounded p-3 mb-3';
-    item.innerHTML = `
-      <label>Nomor Tiket:</label>
-      <input type="text" name="magnus_ticket[]" class="border rounded w-full p-2 mb-2" placeholder="Contoh: #258106813">
+function tambahMagnus() {
+  const group = document.getElementById('magnus-group');
+  const item = document.createElement('div');
+  item.className = 'magnus-item border rounded p-3 mb-3';
+  item.innerHTML = `
+    <label>Nomor Tiket:</label>
+    <input type="text" name="nomortiket_magnus[]" class="border rounded w-full p-2 mb-2" placeholder="Contoh: #258106813">
 
-      <label>Detail Laporan:</label>
-      <textarea name="magnus_detail[]" placeholder="Masukkan detail laporan, 1 baris untuk 1 item" class="border rounded w-full p-2 resize-none" style="height: 120px;"></textarea>
+    <label>Detail Laporan:</label>
+    <textarea name="detail_magnus[]" placeholder="Masukkan detail laporan, 1 baris untuk 1 item" class="border rounded w-full p-2 resize-none" style="height: 120px;"></textarea>
 
-      <button type="button" class="btn-hapus" onclick="hapusMagnus(this)">Hapus Tiket</button>
-    `;
-    group.appendChild(item);
+    <button type="button" class="btn-hapus" onclick="hapusMagnus(this)">Hapus Tiket</button>
+  `;
+  group.appendChild(item);
+}
+
+function hapusMagnus(button) {
+  const group = document.getElementById('magnus-group');
+  if (group.children.length > 1) {
+    button.parentElement.remove();
+  } else {
+    alert("Minimal harus ada 1 tiket Magnus");
   }
-
-  function hapusMagnus(button) {
-    const group = document.getElementById('magnus-group');
-    if (group.children.length > 1) {
-      button.parentElement.remove();
-    } else {
-      alert("Minimal harus ada 1 tiket Magnus");
-    }
-  }
+}
 </script>
 
   <script>
