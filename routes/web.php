@@ -26,6 +26,9 @@ Route::put('/beritaacara/{id}', [BeritaAcaraController::class, 'update'])->name(
 Route::get('/beritaacara/{id}/print', [BeritaAcaraController::class, 'print'])->name('beritaacara.print');
 Route::delete('/beritaacara/{id}', [BeritaAcaraController::class, 'destroy'])->name('beritaacara.destroy');
 
+// Route untuk export ZIP per bulan
+Route::get('/beritaacara/export/zip', [BeritaAcaraController::class, 'exportZipPerBulan'])->name('beritaacara.export.zip');
+
 
 
 

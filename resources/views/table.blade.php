@@ -106,6 +106,32 @@
     <h1>Tabel Berita Acara Shift SOC Telkomsat</h1>
     
 
+
+    <form id="exportZipForm" method="GET" action="{{ route('beritaacara.export.zip') }}" style="margin: 20px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: flex-end;">
+      <label for="start_date">Dari tanggal:</label>
+      <input type="date" name="start_date" id="start_date" style="padding:4px 8px; border-radius:4px; border:1px solid #ccc;">
+      <label for="end_date">Sampai tanggal:</label>
+      <input type="date" name="end_date" id="end_date" style="padding:4px 8px; border-radius:4px; border:1px solid #ccc;">
+      <label for="start_month">Dari bulan:</label>
+      <input type="month" name="start_month" id="start_month" style="padding:4px 8px; border-radius:4px; border:1px solid #ccc;">
+      <label for="end_month">Sampai bulan:</label>
+      <input type="month" name="end_month" id="end_month" style="padding:4px 8px; border-radius:4px; border:1px solid #ccc;">
+      <button type="submit" class="btn btn-success" style="background:#28a745;color:#fff;padding:8px 16px;border-radius:4px;">
+        <i class="fas fa-file-archive"></i> Export ZIP
+      </button>
+    </form>
+
+    @if(session('error'))
+      <div style="background:#ffd6d6;color:#a10000;padding:10px 20px;margin-bottom:15px;border-radius:4px;">
+        <b>Error:</b> {{ session('error') }}
+      </div>
+    @endif
+    @if(session('success'))
+      <div style="background:#d6ffd6;color:#006600;padding:10px 20px;margin-bottom:15px;border-radius:4px;">
+        <b>Sukses:</b> {{ session('success') }}
+      </div>
+    @endif
+
     <div class="table-container">
       <table>
         <thead>

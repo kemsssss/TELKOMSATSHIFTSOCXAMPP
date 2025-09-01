@@ -253,7 +253,7 @@ $fieldsToImplode = [
         if (!$relativePath) return '';
 
         if (Storage::disk('public')->exists($relativePath)) {
-            $path = Storage::disk('public')->path($relativePath);
+            $path = public_path('storage/' . $relativePath);
             $mime = mime_content_type($path);
             $base64 = base64_encode(file_get_contents($path));
             return "data:{$mime};base64,{$base64}";
@@ -277,4 +277,113 @@ $fieldsToImplode = [
         return redirect()->route('beritaacara.index')
                          ->with('success', 'Data berhasil dihapus.');
     }
+
+        /**
+     * Export data BeritaAcara ke ZIP berisi file CSV per bulan.
+     */
+    public function exportZipPerBulan(Request $request)
+    {
+
+        // Filter by tanggal/bulan jika ada
+        $query = BeritaAcara::with(['petugasLama', 'petugasBaru']);
+        // Filter tanggal
+        if ($request->filled('start_date')) {
+            $query->whereDate('tanggal_shift', '>=', $request->start_date);
+        }
+        if ($request->filled('end_date')) {
+            $query->whereDate('tanggal_shift', '<=', $request->end_date);
+        }
+        // Filter bulan
+        if ($request->filled('start_month')) {
+            $startMonth = $request->start_month . '-01';
+            $query->whereDate('tanggal_shift', '>=', $startMonth);
+        }
+        if ($request->filled('end_month')) {
+            // Ambil akhir bulan
+            $endMonth = \Carbon\Carbon::parse($request->end_month . '-01')->endOfMonth()->format('Y-m-d');
+            $query->whereDate('tanggal_shift', '<=', $endMonth);
+        }
+        $beritaAcaras = $query->orderBy('tanggal_shift')->get();
+
+        // Jika tidak ada data, tampilkan error
+        if ($beritaAcaras->isEmpty()) {
+            return back()->with('error', 'Tidak ada data Berita Acara untuk range/filter yang dipilih.');
+        }
+
+        // Group by bulan (YYYY-MM)
+        $grouped = $beritaAcaras->groupBy(function($item) {
+            return \Carbon\Carbon::parse($item->tanggal_shift)->format('Y-m');
+        });
+
+        $csvFiles = [];
+        foreach ($grouped as $bulan => $items) {
+            $csv = '';
+            // Header
+            $csv .= 'Tanggal,Nama Petugas Lama,NIK Petugas Lama,Shift Petugas Lama,Nama Petugas Baru,NIK Petugas Baru,Shift Petugas Baru,No Tiket,Sangfor,FortiJTN,FortiWeb,Checkpoint,Sophos IP,Sophos URL,VPN,EDR,PRTG 1,Status PRTG 1,PRTG 2,Status PRTG 2,Nomor Tiket Magnus,Daily Report Magnus' . "\n";
+            foreach ($items as $row) {
+                $petugasLama = $row->petugasLama->pluck('nama')->implode(' | ');
+                $petugasLamaNik = $row->petugasLama->pluck('nik')->implode(' | ');
+                $petugasLamaShift = $row->lama_shift;
+                $petugasBaru = $row->petugasBaru->pluck('nama')->implode(' | ');
+                $petugasBaruNik = $row->petugasBaru->pluck('nik')->implode(' | ');
+                $petugasBaruShift = $row->baru_shift;
+                $csv .= '"'.implode('","', [
+                    $row->tanggal_shift,
+                    $petugasLama,
+                    $petugasLamaNik,
+                    $petugasLamaShift,
+                    $petugasBaru,
+                    $petugasBaruNik,
+                    $petugasBaruShift,
+                    $row->tiket,
+                    $row->sangfor,
+                    $row->jtn,
+                    $row->web,
+                    $row->checkpoint,
+                    is_array($row->sophos_ip) ? implode(' | ', $row->sophos_ip) : $row->sophos_ip,
+                    is_array($row->sophos_url) ? implode(' | ', $row->sophos_url) : $row->sophos_url,
+                    is_array($row->vpn) ? implode(' | ', $row->vpn) : $row->vpn,
+                    is_array($row->edr) ? implode(' | ', $row->edr) : $row->edr,
+                    is_array($row->prtg1) ? implode(' | ', $row->prtg1) : $row->prtg1,
+                    is_array($row->prtg_status1) ? implode(' | ', $row->prtg_status1) : $row->prtg_status1,
+                    is_array($row->prtg2) ? implode(' | ', $row->prtg2) : $row->prtg2,
+                    is_array($row->prtg_status2) ? implode(' | ', $row->prtg_status2) : $row->prtg_status2,
+                    is_array($row->nomortiket_magnus) ? implode(' | ', $row->nomortiket_magnus) : $row->nomortiket_magnus,
+                    is_array($row->detail_magnus) ? implode(' | ', $row->detail_magnus) : $row->detail_magnus,
+                ]).'"' . "\n";
+            }
+            $csvFiles["Berita_Acara_{$bulan}.csv"] = $csv;
+        }
+
+        // Pastikan folder zip ada
+        $zipDir = storage_path('app/public/zip');
+        if (!is_dir($zipDir)) {
+            mkdir($zipDir, 0777, true);
+        }
+
+        // Buat ZIP di folder zip
+        $zipFileName = 'berita_acara_perbulan_'.date('Ymd_His').'.zip';
+        $zipPath = $zipDir . DIRECTORY_SEPARATOR . $zipFileName;
+        $zip = new \ZipArchive();
+        $openResult = $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+        if ($openResult === TRUE) {
+            foreach ($csvFiles as $filename => $content) {
+                $zip->addFromString($filename, $content);
+            }
+            $zip->close();
+        } else {
+            return back()->with('error', 'Gagal membuat file ZIP. Kode error: ' . $openResult . ' | Path: ' . $zipPath);
+        }
+
+        // Debug: cek apakah file berhasil dibuat
+        if (!file_exists($zipPath)) {
+            return back()->with('error', 'ZIP gagal dibuat. Path: ' . $zipPath);
+        }
+
+        // Download file ZIP
+        return response()->download($zipPath)->deleteFileAfterSend(true);
+    }
+
+
+    
 }
