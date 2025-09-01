@@ -310,69 +310,78 @@ $fieldsToImplode = [
             return back()->with('error', 'Tidak ada data Berita Acara untuk range/filter yang dipilih.');
         }
 
-        // Group by bulan (YYYY-MM)
-        $grouped = $beritaAcaras->groupBy(function($item) {
-            return \Carbon\Carbon::parse($item->tanggal_shift)->format('Y-m');
-        });
-
-        $csvFiles = [];
-        foreach ($grouped as $bulan => $items) {
-            $csv = '';
-            // Header
-            $csv .= 'Tanggal,Nama Petugas Lama,NIK Petugas Lama,Shift Petugas Lama,Nama Petugas Baru,NIK Petugas Baru,Shift Petugas Baru,No Tiket,Sangfor,FortiJTN,FortiWeb,Checkpoint,Sophos IP,Sophos URL,VPN,EDR,PRTG 1,Status PRTG 1,PRTG 2,Status PRTG 2,Nomor Tiket Magnus,Daily Report Magnus' . "\n";
-            foreach ($items as $row) {
-                $petugasLama = $row->petugasLama->pluck('nama')->implode(' | ');
-                $petugasLamaNik = $row->petugasLama->pluck('nik')->implode(' | ');
-                $petugasLamaShift = $row->lama_shift;
-                $petugasBaru = $row->petugasBaru->pluck('nama')->implode(' | ');
-                $petugasBaruNik = $row->petugasBaru->pluck('nik')->implode(' | ');
-                $petugasBaruShift = $row->baru_shift;
-                $csv .= '"'.implode('","', [
-                    $row->tanggal_shift,
-                    $petugasLama,
-                    $petugasLamaNik,
-                    $petugasLamaShift,
-                    $petugasBaru,
-                    $petugasBaruNik,
-                    $petugasBaruShift,
-                    $row->tiket,
-                    $row->sangfor,
-                    $row->jtn,
-                    $row->web,
-                    $row->checkpoint,
-                    is_array($row->sophos_ip) ? implode(' | ', $row->sophos_ip) : $row->sophos_ip,
-                    is_array($row->sophos_url) ? implode(' | ', $row->sophos_url) : $row->sophos_url,
-                    is_array($row->vpn) ? implode(' | ', $row->vpn) : $row->vpn,
-                    is_array($row->edr) ? implode(' | ', $row->edr) : $row->edr,
-                    is_array($row->prtg1) ? implode(' | ', $row->prtg1) : $row->prtg1,
-                    is_array($row->prtg_status1) ? implode(' | ', $row->prtg_status1) : $row->prtg_status1,
-                    is_array($row->prtg2) ? implode(' | ', $row->prtg2) : $row->prtg2,
-                    is_array($row->prtg_status2) ? implode(' | ', $row->prtg_status2) : $row->prtg_status2,
-                    is_array($row->nomortiket_magnus) ? implode(' | ', $row->nomortiket_magnus) : $row->nomortiket_magnus,
-                    is_array($row->detail_magnus) ? implode(' | ', $row->detail_magnus) : $row->detail_magnus,
-                ]).'"' . "\n";
-            }
-            $csvFiles["Berita_Acara_{$bulan}.csv"] = $csv;
-        }
-
-        // Pastikan folder zip ada
+        // Pastikan folder zip dan temp ada
         $zipDir = storage_path('app/public/zip');
+        $tempDir = storage_path('app/public/zip/temp_pdf');
         if (!is_dir($zipDir)) {
             mkdir($zipDir, 0777, true);
         }
+        if (!is_dir($tempDir)) {
+            mkdir($tempDir, 0777, true);
+        }
 
-        // Buat ZIP di folder zip
+        $pdfFiles = [];
+        foreach ($beritaAcaras as $row) {
+            // Data untuk PDF (ambil dari method print, ringkas)
+            $petugas_lama = $row->petugasLama;
+            $petugas_baru = $row->petugasBaru;
+            $lastPetugasLama = $petugas_lama->last();
+            $lastPetugasBaru = $petugas_baru->last();
+            $data = [
+                'petugas_lama'   => $petugas_lama,
+                'petugas_baru'   => $petugas_baru,
+                'lama_shift'     => $row->lama_shift,
+                'baru_shift'     => $row->baru_shift,
+                'tanggal_shift'  => $row->tanggal_shift,
+                'tiket_nomor'    => $row->tiket,
+                'sangfor'        => $row->sangfor,
+                'fortijtn'       => $row->jtn,
+                'fortiweb'       => $row->web,
+                'checkpoint'     => $row->checkpoint,
+                'sophos_ip'      => explode("\n", $row->sophos_ip ?? ''),
+                'sophos_url'     => explode("\n", $row->sophos_url ?? ''),
+                'vpn'            => explode("\n", $row->vpn ?? ''),
+                'edr'            => explode("\n", $row->edr ?? ''),
+                'lama_ttd'       => $this->getBase64FromStorage($lastPetugasLama->ttd ?? null),
+                'baru_ttd'       => $this->getBase64FromStorage($lastPetugasBaru->ttd ?? null),
+                'lama_nama'      => $lastPetugasLama->nama ?? '-',
+                'lama_nik'       => $lastPetugasLama->nik ?? '-',
+                'baru_nama'      => $lastPetugasBaru->nama ?? '-',
+                'baru_nik'       => $lastPetugasBaru->nik ?? '-',
+                'logo'           => $this->getBase64FromStorage('logotelkomsat/Logo-Telkomsat.png'),
+                'prtg1'          => explode("\n", $row->prtg1 ?? ''),
+                'prtg_status1'   => explode("\n", $row->prtg_status1 ?? ''),
+                'prtg2'          => explode("\n", $row->prtg2 ?? ''),
+                'prtg_status2'   => explode("\n", $row->prtg_status2 ?? ''),
+                'nomortiket_magnus' => explode("\n", $row->nomortiket_magnus ?? ''),
+                'detail_magnus'     => explode("\n", $row->detail_magnus ?? ''),
+            ];
+            $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('berita-acara', $data);
+            $pdfFileName = 'Berita_Acara_' . $row->id . '.pdf';
+            $pdfPath = $tempDir . DIRECTORY_SEPARATOR . $pdfFileName;
+            $pdf->save($pdfPath);
+            $pdfFiles[$pdfFileName] = $pdfPath;
+        }
+
+        // Buat ZIP
         $zipFileName = 'berita_acara_perbulan_'.date('Ymd_His').'.zip';
         $zipPath = $zipDir . DIRECTORY_SEPARATOR . $zipFileName;
         $zip = new \ZipArchive();
         $openResult = $zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
         if ($openResult === TRUE) {
-            foreach ($csvFiles as $filename => $content) {
-                $zip->addFromString($filename, $content);
+            foreach ($pdfFiles as $filename => $filePath) {
+                $zip->addFile($filePath, $filename);
             }
             $zip->close();
         } else {
+            // Hapus file PDF sementara jika gagal
+            foreach ($pdfFiles as $filePath) { if (file_exists($filePath)) unlink($filePath); }
             return back()->with('error', 'Gagal membuat file ZIP. Kode error: ' . $openResult . ' | Path: ' . $zipPath);
+        }
+
+        // Hapus file PDF sementara
+        foreach ($pdfFiles as $filePath) {
+            if (file_exists($filePath)) unlink($filePath);
         }
 
         // Debug: cek apakah file berhasil dibuat
