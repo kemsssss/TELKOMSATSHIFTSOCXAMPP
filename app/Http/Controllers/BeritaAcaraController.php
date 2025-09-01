@@ -6,6 +6,8 @@ use App\Models\Petugas;
 use App\Models\BeritaAcara;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class BeritaAcaraController extends Controller
@@ -104,7 +106,7 @@ public function cetakPDF(Request $request) {
         'detail_magnus'     => $request->input('detail_magnus', []),
     ];
 
-    return Pdf::loadView('berita-acara', $data)->stream('serah-terima-shift-SOC.pdf');
+    return Pdf::loadView('berita-acara', $data)->stream('Serah Terima Shift SOC-' . Carbon::now()->format('Y-m-d') . '.pdf');
 }
 
 
@@ -149,7 +151,7 @@ public function print($id)
         'detail_magnus'     => explode("\n", $beritaAcara->detail_magnus ?? ''),
     ];
 
-    return Pdf::loadView('berita-acara', $data)->stream('Serah Terima Shift SOC.pdf');
+    return Pdf::loadView('berita-acara', $data)->stream('Serah Terima Shift SOC ' . Carbon::now()->format('Y-m-d') . '.pdf');
 }
 
 
@@ -357,7 +359,12 @@ $fieldsToImplode = [
                 'detail_magnus'     => explode("\n", $row->detail_magnus ?? ''),
             ];
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('berita-acara', $data);
-            $pdfFileName = 'Berita_Acara_' . $row->id . '.pdf';
+            $tanggal = Carbon::parse($row->tanggal_shift)->format('Y-m-d');
+            $shiftRaw = $row->baru_shift ?? $row->lama_shift ?? '-';
+    preg_match('/\d+/', $shiftRaw, $matches);
+    $shift = $matches[0] ?? $shiftRaw;
+            $pdfFileName = "BA-serah terima-shift {$shift} SOC-{$tanggal}.pdf";
+            $pdfFileName = Str::of($pdfFileName)->replaceMatches('/[<>:"\/\\|?*]/', '')->value();
             $pdfPath = $tempDir . DIRECTORY_SEPARATOR . $pdfFileName;
             $pdf->save($pdfPath);
             $pdfFiles[$pdfFileName] = $pdfPath;
